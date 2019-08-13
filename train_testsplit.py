@@ -6,6 +6,5 @@ from dataload import reviews
 
 train_reviews=reviews.review[:10000]
 train_sentiments=reviews.sentiment[:10000]
-test_reviews=reviews.review[10001:]
-test_sentiments=reviews.sentiment[10001:]
-print (train_reviews[1001])
+test_reviews=reviews.review[10001:12500]
+test_sentiments=reviews.sentiment[10001:12500]

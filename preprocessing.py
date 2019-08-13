@@ -3,7 +3,7 @@
 import re
 
 from dataload import reviews
-#import train_testsplit as ts
+from train_testsplit import *
  
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -52,14 +52,6 @@ def lemmatizer(filtered_tokens):
 
 reviews['review']=reviews['review'].apply(lemmatizer)
     
-
-
-train_reviews=reviews.review[:10000]
-train_sentiments=reviews.sentiment[:10000]
-test_reviews=reviews.review[10001:12500]
-test_sentiments=reviews.sentiment[10001:12500]
-
-
 def tfidf():
     tf=TfidfVectorizer(min_df=5,max_df=0.8,ngram_range=(1,3),use_idf=True,analyzer='word')
     tftrain_reviews=tf.fit_transform(train_reviews)
