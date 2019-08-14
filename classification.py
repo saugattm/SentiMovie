@@ -22,6 +22,8 @@ svc = LinearSVC(dual=False)
 svc_train=svc.fit(tftrain_reviews,train_sentiments)
 svc_predict=svc.predict(tftest_reviews)
 
+pickle.dump(svc,open("SVM.p","wb"))
+
 print(svc_predict)
 
 svc_score=accuracy_score(test_sentiments,svc_predict)
@@ -30,7 +32,9 @@ print(svc_score)
 cm=confusion_matrix(test_sentiments,svc_predict,labels=[1,0])
 print(cm)
 
-pickle.dump(svc,open("SVM.p","wb"))
+cl_report=classification_report(test_sentiments,svc_predict)
+print(cl_report)
+
 
 
 
