@@ -3,14 +3,11 @@
 import re
 
 from dataload import reviews
-from train_testsplit import *
  
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
 from nltk.stem import WordNetLemmatizer
-
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 def cleaning(review):
     s=review
@@ -51,13 +48,4 @@ def lemmatizer(filtered_tokens):
     return filtered_text
 
 reviews['review']=reviews['review'].apply(lemmatizer)
-    
-def tfidf():
-    tf=TfidfVectorizer(min_df=5,max_df=0.8,ngram_range=(1,3),use_idf=True,analyzer='word')
-    tftrain_reviews=tf.fit_transform(train_reviews)
-    tftest_reviews=tf.fit_transform(test_reviews)
-    print(tftrain_reviews.shape)
-    print(tftest_reviews.shape)
-    print(tf.get_feature_names())
 
-tfidf()

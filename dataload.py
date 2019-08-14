@@ -20,4 +20,4 @@ for nfile in negfiles:
 reviews = pd.concat([
     pd.DataFrame({"review":posreviews, "sentiment":1, "file":posfiles}),
     pd.DataFrame({"review":negreviews, "sentiment":0, "file":negfiles}),
-], ignore_index=True).sample(frac=0.5,random_state=1)
+], ignore_index=True).sample(frac=1,random_state=1)
