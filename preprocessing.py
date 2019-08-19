@@ -49,3 +49,5 @@ def lemmatizer(filtered_tokens):
 
 reviews['review']=reviews['review'].apply(lemmatizer)
 
+
+

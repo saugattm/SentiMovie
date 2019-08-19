@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from dataload import reviews
+from preprocessing import reviews
 
 
 train_reviews=reviews.review[:12500]
