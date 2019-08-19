@@ -14,7 +14,7 @@ def func(text):
             """
     chunkParser = nltk.RegexpParser(grammar)
     tree = chunkParser.parse((pos_tag(tokens)))
-    print(tree.draw())           
+    #print(tree.draw())           
     parsed_sent = {}
     for i in tree:
         if type(i)==Tree:
@@ -30,5 +30,4 @@ def func(text):
             else:
                 parsed_sent[ner[0]] =  parsed_sent[ner[0]] + ner[1]
     print(parsed_sent)
-
-func(text)
+    return parsed_sent

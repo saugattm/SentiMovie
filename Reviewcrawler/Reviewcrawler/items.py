@@ -9,12 +9,15 @@ import scrapy
 
 
 class ReviewcrawlerItem(scrapy.Item):
-# =============================================================================
-#     title=scrapy.Field()
-#     overview=scrapy.Field()
-#     link=scrapy.Field()
-# =============================================================================
-    cname=scrapy.Field()
-    ctitle=scrapy.Field()
-    review=scrapy.Field()
+    title=scrapy.Field()
+    overview=scrapy.Field()
+    language=scrapy.Field()
+    runtime=scrapy.Field()
+    budget=scrapy.Field()
+    revenue=scrapy.Field()
+    genres=scrapy.Field()
+    released_date=scrapy.Field()
+    cast_members=scrapy.Field()
+    crew_members=scrapy.Field()
+    reviews=scrapy.Field()
     
