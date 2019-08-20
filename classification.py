@@ -4,6 +4,9 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import LinearSVC
 import pickle
+import csv
+import pandas as pd
+
 
 from sklearn.metrics import classification_report,confusion_matrix,accuracy_score
 
@@ -25,14 +28,28 @@ svc_predict=svc.predict(tftest_reviews)
 with open('trainedmodel','wb') as f:
     pickle.dump((tf,svc),f)
 
-print(svc_predict)
+#print(svc_predict)
 
 svc_score=accuracy_score(test_sentiments,svc_predict)
-print(svc_score)
+#print(svc_score)
 
 cm=confusion_matrix(test_sentiments,svc_predict,labels=[1,0])
-print(cm)
+#print(cm)
 
 cl_report=classification_report(test_sentiments,svc_predict)
-print(cl_report)
+#print(cl_report)
 
+with open ('CM.csv','w') as f:
+    writer = csv.writer(f)
+    for row in cm:
+        writer.writerow(row)
+# =============================================================================
+# out_dict = {
+#              "precision" :cl_report[0]
+#             ,"recall" : cl_report[1]
+#             ,"f1-score" : cl_report[2]
+#             ,"support" : cl_report[3]
+#             }
+# out_df = pd.DataFrame(out_dict, index = [0])
+# print (out_df)
+# =============================================================================

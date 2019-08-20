@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from ..items import ReviewcrawlerItem
-
+import csv
 #from scrapy.crawler import CrawlerProcess
-q="Avengers"
+
+
+with open('/home/baka/SentiMovie/search.csv','r') as f:
+    reader=csv.reader(f)
+    data=[row for row in reader]
+    #print(data[1])
+
+q = ''.join(data[1])
 
 class reviewspider(scrapy.Spider):
     name='reviewcrawler'
@@ -21,7 +28,7 @@ class reviewspider(scrapy.Spider):
             )
     def after_results(self,response):
         links= response.css('.title.result::attr(href)').extract() 
-        for link in links[:7]:
+        for link in links[:6]:
             #print(link)
             yield scrapy.Request(response.urljoin(link),callback= self.parse_data)
             
@@ -65,31 +72,43 @@ class reviewspider(scrapy.Spider):
          crew_members=response.css('.profile p::text,.profile p>a::text').extract()
          #print(crew_members)
          
-         items =ReviewcrawlerItem()
-         
-         items['title']=title
-         items['overview']=overview
-         items['language']=language
-         items['runtime']=runtime
-         items['budget']=budget
-         items['revenue']=revenue
-         items['genres']=genres
-         items['released_date']=released_date
-         items['cast_members']=cast_members
-         items['crew_members']=crew_members
-         yield items
+         """yielding from here would result in format mismatch"""
          review_link=response.css(".review_container>div>div>p>a::attr(href)").extract()
          for link in review_link:
-             yield scrapy.Request(response.urljoin(link),callback=self.extract_reviews)
+             yield scrapy.Request(response.urljoin(link),callback=self.extract_reviews,meta={'title':title,
+                                  'overview':overview,'language':language,'runtime':runtime,'budget':budget,
+                                  'revenue':revenue,'genres':genres,'released_date':released_date,
+                                  'cast_members':cast_members,'crew_members':crew_members})
          
     def extract_reviews(self,response):
-        reviews=response.css(".teaser p::text").extract()
+        title=response.meta['title']
+        overview=response.meta['overview']
+        language=response.meta['language']
+        runtime=response.meta['runtime']
+        budget=response.meta['budget']
+        revenue=response.meta['revenue']
+        genres=response.meta['genres']
+        released_date=response.meta['released_date']
+        cast_members=response.meta['cast_members']
+        crew_members=response.meta['crew_members']
         items =ReviewcrawlerItem()
+        items['title']=title
+        items['overview']=overview
+        items['language']=language
+        items['runtime']=runtime
+        items['budget']=budget
+        items['revenue']=revenue
+        items['genres']=genres
+        items['released_date']=released_date
+        items['cast_members']=cast_members
+        items['crew_members']=crew_members
+        reviews=response.css(".card>div>div>h3::text,.card>div>div>div>h3>a::text,.card>div>p::text").extract()
+        print(reviews)
         items['reviews']=reviews
         yield items
-        #print(reviews)
+
         
-        
+      
         
         
 # =============================================================================
@@ -100,8 +119,8 @@ class reviewspider(scrapy.Spider):
 # 
 # process.crawl(reviewspider)
 # process.start()
+#             
 # =============================================================================
-            
         
   
         
