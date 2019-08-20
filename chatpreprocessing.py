@@ -4,8 +4,7 @@ from nltk.tree import Tree
 from nltk import pos_tag, word_tokenize
 import nltk
 import csv
-#text= input("Enter your query:")
-text ="Who is the director of the Dark Knight?"
+
 def func(text):
     tokens= word_tokenize(text)
     grammar="""
@@ -30,16 +29,12 @@ def func(text):
                 parsed_sent[ner[0]] = ner[1]
             else:
                 parsed_sent[ner[0]] =  parsed_sent[ner[0]] + ner[1]
-    print(parsed_sent)
-    return parsed_sent
+    #print(parsed_sent)
 
-parsed_sent=func(text)
+    with open('search.csv','w') as f:
+        writer = csv.writer(f)
+        for key,val in parsed_sent.items():
+            writer.writerow([val])
+        f.close()
 
-with open('search.csv','w') as f:
-    writer = csv.writer(f)
-    for key,val in parsed_sent.items():
-        writer.writerow([val])
-    
-f.close()
-
-   
+#func(text)  

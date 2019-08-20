@@ -5,8 +5,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import LinearSVC
 import pickle
 import csv
-import pandas as pd
-
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+#import pandas
+# =============================================================================
+# import sklearn
+# print(sklearn.__version__)
+# 
+# =============================================================================
 
 from sklearn.metrics import classification_report,confusion_matrix,accuracy_score
 
@@ -43,13 +49,21 @@ with open ('CM.csv','w') as f:
     writer = csv.writer(f)
     for row in cm:
         writer.writerow(row)
-# =============================================================================
-# out_dict = {
-#              "precision" :cl_report[0]
-#             ,"recall" : cl_report[1]
-#             ,"f1-score" : cl_report[2]
-#             ,"support" : cl_report[3]
-#             }
-# out_df = pd.DataFrame(out_dict, index = [0])
-# print (out_df)
-# =============================================================================
+        
+#df=pandas.DataFrame(cl_report).transpose()
+        
+"""postive word cloud"""
+plt.figure(figsize=(10,10))
+positive_text=train_reviews[8]
+WC=WordCloud(width=1000,height=500,max_words=500,min_font_size=5)
+positive_words=WC.generate(positive_text)
+plt.imshow(positive_words,interpolation='bilinear')
+plt.show
+
+"""negative word cloud"""
+plt.figure(figsize=(10,10))
+negative_text=train_reviews[18644]
+WC=WordCloud(width=1000,height=500,max_words=500,min_font_size=5)
+negative_words=WC.generate(negative_text)
+plt.imshow(negative_words,interpolation='bilinear')
+plt.show
