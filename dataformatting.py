@@ -7,17 +7,20 @@ from filename import file_name
 file=file_name()
 file_address='/home/baka/SentiMovie/Reviewcrawler/'+file
 data=pd.read_csv(file_address)
-# =============================================================================
-# df = data[['title','overview',['released_date']]]
-# print(df)
-# =============================================================================
+if len(data.index)>2:
+    print("Which one do you mean?")
+    print(data['title'])
+    index=input("Select an index")
+else:
+    index=0
+    
 column_titles=["title","released_date","overview","language","cast_members","crew_members","genres","budget","revenue","runtime","reviews"]
 data=data.reindex(columns=column_titles)
 data=data.rename(columns={'released_date':'release date','cast_members':'cast members','crew_members':'crew members','genres':'genre','reviews':'review'})
 
 def cast_format():
     cast_detail={"actor_name":[],"actor_role":[]}
-    castm=data['cast members'][0]
+    castm=data.iat[int(index),4]
     castm=castm.split(",")
     switch=1
     
@@ -33,7 +36,7 @@ def cast_format():
         #print(r,c)
         dict_detail[r].append(c) 
     
-    data['cast members'][0]=dict_detail
+    data.iat[int(index),4]=dict_detail
     
 
 
@@ -41,7 +44,7 @@ def cast_format():
 def crew_format():
     
     crew_detail={"crew_member":[],"crew_role":[]}
-    crewd=data['crew members'][0]
+    crewd=data.iat[int(index),5]
     crewd=crewd.split(",")
     switch=1
     
@@ -60,12 +63,12 @@ def crew_format():
     for r,c in zip(crew_detail['crew_member'],crew_detail['crew_role']):
         #print(r,c)
         dict_detail[c].append(r)        
-    data['crew members'][0]=dict_detail
+    data.iat[int(index),5]=dict_detail
     
 
             
 def review_format():
-    review=data['review'][0]
+    review=data.iat[int(index),10]
     review=review.replace("A review by",'|')
     review=review+'|'
     count=0
@@ -84,12 +87,12 @@ def review_format():
             rev.append(revi)
     except IndexError:
         pass
-    data['review'][0]=rev
+    data.iat[int(index),10]=rev
 
 def data_form():
     cast_format()
     crew_format()
-    review_format()
+    #review_format()
     data.to_csv(file)
     print("data formatting and exporting")
 #data_form()

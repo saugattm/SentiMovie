@@ -2,17 +2,23 @@
 # -*- coding: utf-8 -*-
 import pickle
 import pandas as pd
-#from nltk.tokenize import word_tokenize
-with open("trainedmodel",'rb') as f:
-    tf,svc=pickle.load(f)
-# =============================================================================
-# with open('trained_vectorizer','rb') as f:
-#     vectorizer=pickle.load(f)
-# =============================================================================
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)  
+pd.set_option('display.max_colwidth', -1)
+from filename import file_name
 
-reviews=pd.read_csv('/home/baka/Downloads/IMDB Dataset.csv')
-re=reviews[:10]
-reviews=reviews[:10]
-reviews=reviews.review
-text=tf.transform(reviews)
-print(svc.predict(text))
+def reviewclassify():
+    
+    with open("trainedmodel",'rb') as f:
+        tf,svc=pickle.load(f)
+        
+        data=pd.read_csv('/home/baka/SentiMovie/'+file_name())
+        review=data['review']
+        
+        text=tf.transform(review)
+        for senti in (svc.predict(text)):
+            if senti==1:
+                print("positive")
+            else:
+                print("negative")
+        return review

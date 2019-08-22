@@ -9,9 +9,10 @@ def crawlsub():
         q=file_name()
         file_path="/home/baka/SentiMovie/Reviewcrawler/"+q
         if os.path.isfile(file_path):
-            print("File Present")
+            message="File Present"
         else:
             qu="scrapy crawl reviewcrawler -o "+q
             #print(q)   
             subprocess.Popen([qu], cwd="/home/baka/SentiMovie/Reviewcrawler", shell=True)
-            return q
+            message="Crawling the data"
+        return message

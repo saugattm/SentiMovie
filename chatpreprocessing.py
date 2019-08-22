@@ -4,7 +4,7 @@ from nltk.tree import Tree
 from nltk import pos_tag, word_tokenize
 import nltk
 import csv
-text="Who is the director of Dark Knight"
+#text="What is the budget of Avengers"
 parsed_sent = {}
 def func(text):
     tokens= word_tokenize(text)
