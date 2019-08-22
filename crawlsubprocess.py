@@ -2,18 +2,16 @@
 # -*- coding: utf-8 -*-
 
 import subprocess
-import csv
+import os.path
+from filename import file_name
+
 def crawlsub():
-    
-    with open('/home/baka/SentiMovie/search.csv','r') as f:
-        reader=csv.reader(f)
-        data=[row for row in reader]
-        #print(data[1])
-        
-        q = ''.join(data[1])
-        q=q+'.csv'
-        q=q.replace(" ","")
-        qu="scrapy crawl reviewcrawler -o "+q
-        print(q)    
-        subprocess.Popen([qu], cwd="/home/baka/SentiMovie/Reviewcrawler", shell=True)
-        return qu
+        q=file_name()
+        file_path="/home/baka/SentiMovie/Reviewcrawler/"+q
+        if os.path.isfile(file_path):
+            print("File Present")
+        else:
+            qu="scrapy crawl reviewcrawler -o "+q
+            #print(q)   
+            subprocess.Popen([qu], cwd="/home/baka/SentiMovie/Reviewcrawler", shell=True)
+            return q

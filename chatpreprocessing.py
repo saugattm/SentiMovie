@@ -4,18 +4,18 @@ from nltk.tree import Tree
 from nltk import pos_tag, word_tokenize
 import nltk
 import csv
-
+text="Who is the director of Dark Knight"
+parsed_sent = {}
 def func(text):
     tokens= word_tokenize(text)
     grammar="""
-            Search: {<DT>?<JJ>*<NN>} 
             Movie: {<IN><NN>|<NNP>|<NNS>|<NPS>}
+            Search: {<DT>?<JJ>*<NN>|<NNS>} 
             Search: {<VBD>|<VBG>}
             """
     chunkParser = nltk.RegexpParser(grammar)
     tree = chunkParser.parse((pos_tag(tokens)))
     #print(tree.draw())           
-    parsed_sent = {}
     for i in tree:
         if type(i)==Tree:
             concat = ''
@@ -29,7 +29,7 @@ def func(text):
                 parsed_sent[ner[0]] = ner[1]
             else:
                 parsed_sent[ner[0]] =  parsed_sent[ner[0]] + ner[1]
-    #print(parsed_sent)
+    print(parsed_sent)
 
     with open('search.csv','w') as f:
         writer = csv.writer(f)
@@ -37,4 +37,6 @@ def func(text):
             writer.writerow([val])
         f.close()
 
+def filename():
+    return parsed_sent
 #func(text)  

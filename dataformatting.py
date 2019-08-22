@@ -2,15 +2,22 @@
 # -*- coding: utf-8 -*-
 
 import pandas as pd
+from filename import file_name
 
-
-data=pd.read_csv("/home/baka/SentiMovie/Reviewcrawler/AvengersEndgame.csv")
+file=file_name()
+file_address='/home/baka/SentiMovie/Reviewcrawler/'+file
+data=pd.read_csv(file_address)
+# =============================================================================
+# df = data[['title','overview',['released_date']]]
+# print(df)
+# =============================================================================
 column_titles=["title","released_date","overview","language","cast_members","crew_members","genres","budget","revenue","runtime","reviews"]
 data=data.reindex(columns=column_titles)
+data=data.rename(columns={'released_date':'release date','cast_members':'cast members','crew_members':'crew members','genres':'genre','reviews':'review'})
 
 def cast_format():
     cast_detail={"actor_name":[],"actor_role":[]}
-    castm=data['cast_members'][0]
+    castm=data['cast members'][0]
     castm=castm.split(",")
     switch=1
     
@@ -20,15 +27,21 @@ def cast_format():
         else:
             cast_detail['actor_role'].append(cast)
         switch+=1  
-        
-    return cast_detail
+    mylist=cast_detail['actor_name']
+    dict_detail = {un:[] for un in mylist}
+    for r,c in zip(cast_detail['actor_name'],cast_detail['actor_role']):
+        #print(r,c)
+        dict_detail[r].append(c) 
+    
+    data['cast members'][0]=dict_detail
+    
 
 
 
 def crew_format():
     
     crew_detail={"crew_member":[],"crew_role":[]}
-    crewd=data['crew_members'][0]
+    crewd=data['crew members'][0]
     crewd=crewd.split(",")
     switch=1
     
@@ -38,14 +51,21 @@ def crew_format():
         else:
             crew_detail['crew_role'].append(crew)
         switch+=1
-
+    #print(crew_detail['crew_role'])
+    #print(crew_detail['crew_member'])
+    mylist=crew_detail['crew_role']
+    used = set()
+    unique = [x for x in mylist if x not in used and (used.add(x) or True)]
+    dict_detail = {un:[] for un in unique}
     for r,c in zip(crew_detail['crew_member'],crew_detail['crew_role']):
-        if c=='Director':
-            print (r)
-            return r
+        #print(r,c)
+        dict_detail[c].append(r)        
+    data['crew members'][0]=dict_detail
+    
 
+            
 def review_format():
-    review=data['reviews'][0]
+    review=data['review'][0]
     review=review.replace("A review by",'|')
     review=review+'|'
     count=0
@@ -55,7 +75,7 @@ def review_format():
         count+=1
         if r=='|':
             br_pos.append(count)
-    print(br_pos)
+    #print(br_pos)
     #print(review[br_pos[0]:br_pos[1]])
     ran=len(br_pos)
     try:
@@ -64,10 +84,12 @@ def review_format():
             rev.append(revi)
     except IndexError:
         pass
-    
-    return rev
+    data['review'][0]=rev
 
-reviews=review_format()
-for review in reviews:
-    print (review)
-    print ('>>>>>>>')
+def data_form():
+    cast_format()
+    crew_format()
+    review_format()
+    data.to_csv(file)
+    print("data formatting and exporting")
+#data_form()
