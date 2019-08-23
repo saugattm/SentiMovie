@@ -11,7 +11,7 @@ pd.set_option('display.max_colwidth', -1)
 
 question = True
 while (question):
-    print("Hi, I am a chatbot")
+    print("Hi, I am a simple querybot")
     print("\n")
     ques = input("Ask me questions about movies:\n")
     parsed_sent = func(ques)

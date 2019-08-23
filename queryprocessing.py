@@ -27,6 +27,8 @@ cast=['actors','actor','cast','casted']
 direct=['director','directed']
 screenplay=['screenplay' 'screen play','writer','written']
 release=['released','came out']
+info=['info', 'information']
+revenue=['money']
 
 def answers(parsed_sent):
     file =file_name(parsed_sent)
@@ -48,6 +50,11 @@ def answers(parsed_sent):
         #print("the lis is",lis)
         str1 = ''.join(lis)
         return str1
+    elif filtered_tokens in info:
+        return data.at[int(index),'overview']
+    elif filtered_tokens in revenue:
+        return data.at[int(index),'revenue']
+    
     elif filtered_tokens in cast:
         return cast_detail
     elif filtered_tokens in direct:
@@ -56,4 +63,3 @@ def answers(parsed_sent):
         return crew_detail['Screenplay']
     elif filtered_tokens in release:
         return data.at[int(index),'release date']
-    

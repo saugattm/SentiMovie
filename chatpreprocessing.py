@@ -4,7 +4,7 @@ from nltk.tree import Tree
 from nltk import pos_tag, word_tokenize
 import nltk
 import csv
-#text="What is the budget of Avengers"
+text="What is the budget of Avengers"
 
 def func(text):
     parsed_sent = {}

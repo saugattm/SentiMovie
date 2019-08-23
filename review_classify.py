@@ -6,6 +6,7 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)  
 pd.set_option('display.max_colwidth', -1)
 #from dataformatting import index
+count=1
 from chatpreprocessing import file_name
 from dataformatting import temp_index
 
@@ -15,7 +16,7 @@ def reviewclassify(parsed_sent):
         tf,svc=pickle.load(f)
         
 # =============================================================================
-#         data=pd.read_csv('/home/baka/SentiMovie/LionKing.csv')
+#         data=pd.read_csv('/home/baka/SentiMovie/LionKing.csv')z
 #         df=data['review']
 # =============================================================================
         
@@ -40,8 +41,15 @@ def reviewclassify(parsed_sent):
         except IndexError:
             pass
         df=pd.DataFrame(rev)
-        daf=df.iloc[:,0]
-        tr=tf.transform(daf)
+        if count%2==0:
+            daf=df.iloc[:,0]
+            print(daf[0:])
+            tr=tf.transform(daf)
+        else:
+            dafe=df.iloc[:,0]
+            print(daf[0:])
+            tr=tf.transform(dafe)
+        count+=1  
         for senti in (svc.predict(tr)):
             if senti==1:
                 print("positive")
