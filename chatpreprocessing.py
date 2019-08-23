@@ -5,8 +5,9 @@ from nltk import pos_tag, word_tokenize
 import nltk
 import csv
 #text="What is the budget of Avengers"
-parsed_sent = {}
+
 def func(text):
+    parsed_sent = {}
     tokens= word_tokenize(text)
     grammar="""
             Movie: {<IN><NN>|<NNP>|<NNS>|<NPS>}
@@ -29,14 +30,24 @@ def func(text):
                 parsed_sent[ner[0]] = ner[1]
             else:
                 parsed_sent[ner[0]] =  parsed_sent[ner[0]] + ner[1]
-    print(parsed_sent)
+    print("the parsed_sent is:",parsed_sent)
+    file_name(parsed_sent)
+    search_name(parsed_sent)
 
     with open('search.csv','w') as f:
         writer = csv.writer(f)
         for key,val in parsed_sent.items():
             writer.writerow([val])
         f.close()
-
-def filename():
     return parsed_sent
+
+def file_name(parsed_sent):
+    #print(parsed_sent)
+    file=parsed_sent['Movie']
+    file=file.replace(" ","")
+    file=file+".csv"
+    return file
+def search_name(parsed_sent):
+    file=parsed_sent['Search']
+    return file
 #func(text)  

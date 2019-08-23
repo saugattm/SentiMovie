@@ -4,25 +4,16 @@
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import pandas as pd
-from filename import file_name,search_name
+from chatpreprocessing import file_name,search_name
 import ast
 from review_classify import reviewclassify
-from dataformatting import index
-file =file_name()
+from dataformatting import data_form
    
-file_address='/home/baka/SentiMovie/'+file
-data=pd.read_csv(file_address)
-q=search_name()
-column_titles=data.columns.values.tolist()
-cast_detail=ast.literal_eval(data.iat[int(index),5])
-crew_detail=ast.literal_eval(data.iat[int(index),6])
-type(crew_detail)
 
 def tokenize(q):
     tokens= word_tokenize(q)
     #print(tokens)
     return tokens
-tokens=tokenize(q)
 
 def stopwordsremoval(tokens):
     stop_words=set(stopwords.words("english"))
@@ -31,19 +22,30 @@ def stopwordsremoval(tokens):
     #print(filtered_sentence)
     return filtered_sentence
 
-filtered_tokens=stopwordsremoval(tokens)
 
 cast=['actors','actor','cast','casted']
 direct=['director','directed']
 screenplay=['screenplay' 'screen play','writer','written']
 release=['released','came out']
 
-def answers():
+def answers(parsed_sent):
+    file =file_name(parsed_sent)
+       
+    file_address='/home/baka/SentiMovie/'+file
+    data=pd.read_csv(file_address)
+    q=search_name(parsed_sent)
+    tokens = tokenize(q)
+    filtered_tokens=stopwordsremoval(tokens)
+    index =data_form(parsed_sent)
+    column_titles=data.columns.values.tolist()
+    cast_detail=ast.literal_eval(data.iat[int(index),5])
+    crew_detail=ast.literal_eval(data.iat[int(index),6])
+    type(crew_detail)
     if filtered_tokens =='reviews' or filtered_tokens=='review':
-        return reviewclassify()
+        return reviewclassify(parsed_sent)
     if filtered_tokens in column_titles:
         lis= data.at[int(index),filtered_tokens]
-        print("the lis is",lis)
+        #print("the lis is",lis)
         str1 = ''.join(lis)
         return str1
     elif filtered_tokens in cast:

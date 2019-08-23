@@ -2,23 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import pandas as pd
-from filename import file_name
+from chatpreprocessing import file_name
 
-file=file_name()
-file_address='/home/baka/SentiMovie/Reviewcrawler/'+file
-data=pd.read_csv(file_address)
-if len(data.index)>2:
-    print("Which one do you mean?")
-    print(data['title'])
-    index=input("Select an index")
-else:
-    index=0
-    
-column_titles=["title","released_date","overview","language","cast_members","crew_members","genres","budget","revenue","runtime","reviews"]
-data=data.reindex(columns=column_titles)
-data=data.rename(columns={'released_date':'release date','cast_members':'cast members','crew_members':'crew members','genres':'genre','reviews':'review'})
 
-def cast_format():
+temp_index=0
+def cast_format(data,index):
     cast_detail={"actor_name":[],"actor_role":[]}
     castm=data.iat[int(index),4]
     castm=castm.split(",")
@@ -41,7 +29,7 @@ def cast_format():
 
 
 
-def crew_format():
+def crew_format(data,index):
     
     crew_detail={"crew_member":[],"crew_role":[]}
     crewd=data.iat[int(index),5]
@@ -67,7 +55,7 @@ def crew_format():
     
 
             
-def review_format():
+def review_format(data,index):
     review=data.iat[int(index),10]
     review=review.replace("A review by",'|')
     review=review+'|'
@@ -89,10 +77,28 @@ def review_format():
         pass
     data.iat[int(index),10]=rev
 
-def data_form():
-    cast_format()
-    crew_format()
+def data_form(parsed_sent):
+    
+    file=file_name(parsed_sent)
+    file_address='/home/baka/SentiMovie/Reviewcrawler/'+file
+    data=pd.read_csv(file_address)
+    if len(data.index)>2:
+        print("Which one do you mean?")
+        print(data['title'])
+        index=input("Select an index :")
+    else:
+        index=0
+    temp_index = index
+    column_titles=["title","released_date","overview","language","cast_members","crew_members","genres","budget","revenue","runtime","reviews"]
+    data=data.reindex(columns=column_titles)
+    data=data.rename(columns={'released_date':'release date','cast_members':'cast members','crew_members':'crew members','genres':'genre','reviews':'review'})
+    cast_format(data,index)
+    crew_format(data,index)
     #review_format()
     data.to_csv(file)
     print("data formatting and exporting")
 #data_form()
+    return index
+
+
+    
