@@ -16,3 +16,7 @@ def crawlsub(parsed_sent):
             subprocess.Popen([qu], cwd="/home/baka/SentiMovie/Reviewcrawler", shell=True)
             message="Crawling the data"
         return message
+    
+    
+    
+    

@@ -8,10 +8,9 @@ pd.set_option('display.max_colwidth', -1)
 #from dataformatting import index
 count=1
 from chatpreprocessing import file_name
-from dataformatting import temp_index
 
-def reviewclassify(parsed_sent):
-    index = temp_index
+
+def reviewclassify(parsed_sent,index):
     with open("trainedmodel",'rb') as f:
         tf,svc=pickle.load(f)
         
@@ -21,7 +20,7 @@ def reviewclassify(parsed_sent):
 # =============================================================================
         
         data=pd.read_csv('/home/baka/SentiMovie/'+file_name(parsed_sent))
-        review=data.iat[int(temp_index),11]
+        review=data.iat[int(index),11]
         review=review.replace("A review by",'|')
         review=review+'|'
         count=0
@@ -47,7 +46,7 @@ def reviewclassify(parsed_sent):
             tr=tf.transform(daf)
         else:
             dafe=df.iloc[:,0]
-            print(daf[0:])
+            print(dafe[0:])
             tr=tf.transform(dafe)
         count+=1  
         for senti in (svc.predict(tr)):

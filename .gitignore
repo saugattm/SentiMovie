@@ -1,3 +1,5 @@
 Data/
 trainedmodel
 .gitignore
+vec.csv
+

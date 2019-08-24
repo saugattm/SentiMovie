@@ -7,7 +7,7 @@ import pandas as pd
 from chatpreprocessing import file_name,search_name
 import ast
 from review_classify import reviewclassify
-from dataformatting import data_form
+from dataformatting import data_form,temp_index
    
 
 def tokenize(q):
@@ -30,7 +30,7 @@ release=['released','came out']
 info=['info', 'information']
 revenue=['money']
 
-def answers(parsed_sent):
+def answers(parsed_sent,index):
     file =file_name(parsed_sent)
        
     file_address='/home/baka/SentiMovie/'+file
@@ -38,13 +38,13 @@ def answers(parsed_sent):
     q=search_name(parsed_sent)
     tokens = tokenize(q)
     filtered_tokens=stopwordsremoval(tokens)
-    index =data_form(parsed_sent)
+    #index =data_form(parsed_sent)
     column_titles=data.columns.values.tolist()
     cast_detail=ast.literal_eval(data.iat[int(index),5])
     crew_detail=ast.literal_eval(data.iat[int(index),6])
-    type(crew_detail)
+    #type(crew_detail)
     if filtered_tokens =='reviews' or filtered_tokens=='review':
-        return reviewclassify(parsed_sent)
+        return reviewclassify(parsed_sent,index)
     if filtered_tokens in column_titles:
         lis= data.at[int(index),filtered_tokens]
         #print("the lis is",lis)
