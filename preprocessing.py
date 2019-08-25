@@ -33,14 +33,16 @@ def stopwordsremoval(tokens):
   
 reviews['review']=reviews['review'].apply(stopwordsremoval)
 
-def stemmer(filtered_tokens):
-    stemmer=SnowballStemmer("english")
-    stem=[stemmer.stem(w) for w in filtered_tokens]  
-    filtered_text=' '.join(stem)
-    return filtered_text  
-
-#reviews['review']=reviews['review'].apply(stemmer)
-
+# =============================================================================
+# def stemmer(filtered_tokens):
+#     stemmer=SnowballStemmer("english")
+#     stem=[stemmer.stem(w) for w in filtered_tokens]  
+#     filtered_text=' '.join(stem)
+#     return filtered_text  
+# 
+# reviews['review']=reviews['review'].apply(stemmer)
+# 
+# =============================================================================
 def lemmatizer(filtered_tokens):
     lemmatizer=WordNetLemmatizer()
     lemma_words=[lemmatizer.lemmatize(w) for w in filtered_tokens]    

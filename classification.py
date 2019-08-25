@@ -26,18 +26,18 @@ tf=TfidfVectorizer(min_df=5,max_df=0.8,ngram_range=(1,3),use_idf=True,analyzer='
 tff =tf.fit(train_reviews)
 tftrain_reviews=tff.transform(train_reviews)
 tftest_reviews=tff.transform(test_reviews)
-print(tftrain_reviews.shape)
-print(tftest_reviews.shape)
-print(tf.get_feature_names())
-print(tftrain_reviews)
+#print(tftrain_reviews.shape)
+#print(tftest_reviews.shape)
+#print(tf.get_feature_names())
+#print(tftrain_reviews)
+
+
 svc = LinearSVC()
 svc_train=svc.fit(tftrain_reviews,train_sentiments)
 svc_predict=svc.predict(tftest_reviews)
 
-# =============================================================================
-# with open('trainedmodel','wb') as f:
-#     pickle.dump((tf,svc),f)
-# =============================================================================
+with open('trainedmodel','wb') as f:
+    pickle.dump((tf,svc),f)
 
 #print(svc_predict)
 
