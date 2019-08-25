@@ -10,7 +10,7 @@ def func(text):
     tokens= word_tokenize(text)
     grammar="""
             Movie: {<IN><NN>|<NNP>|<NNS>|<NPS>}
-            Search: {<DT>?<JJ>*<NN>|<NNS>} 
+            Search: {<DT>?<NN>|<NNS>} 
             Search: {<VBD>|<VBG>}
             """
     chunkParser = nltk.RegexpParser(grammar)
