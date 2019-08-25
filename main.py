@@ -10,9 +10,9 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_colwidth', -1)
 
 question = True
+print("Hi, I am a querybot")
+print("\n")
 while (question):
-    print("Hi, I am a simple querybot")
-    print("\n")
     ques = input("Ask me questions about movies:\n")
     parsed_sent = func(ques)
 

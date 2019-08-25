@@ -30,12 +30,14 @@ print(tftrain_reviews.shape)
 print(tftest_reviews.shape)
 print(tf.get_feature_names())
 print(tftrain_reviews)
-svc = LinearSVC(dual=False)
+svc = LinearSVC()
 svc_train=svc.fit(tftrain_reviews,train_sentiments)
 svc_predict=svc.predict(tftest_reviews)
 
-with open('trainedmodel','wb') as f:
-    pickle.dump((tf,svc),f)
+# =============================================================================
+# with open('trainedmodel','wb') as f:
+#     pickle.dump((tf,svc),f)
+# =============================================================================
 
 #print(svc_predict)
 

@@ -28,7 +28,7 @@ class reviewspider(scrapy.Spider):
             )
     def after_results(self,response):
         links= response.css('.title.result::attr(href)').extract() 
-        for link in links[:6]:
+        for link in links[:10]:
             #print(link)
             yield scrapy.Request(response.urljoin(link),callback= self.parse_data)
             
