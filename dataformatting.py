@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-import pandas as pd
-from chatpreprocessing import file_name
-
-
-temp_index=0
 def cast_format(data,index):
     cast_detail={"actor_name":[],"actor_role":[]}
     castm=data.iat[int(index),4]
@@ -55,27 +49,29 @@ def crew_format(data,index):
     
 
             
-def review_format(data,index):
-    review=data.iat[int(index),10]
-    review=review.replace("A review by",'|')
-    review=review+'|'
-    count=0
-    br_pos=[]
-    rev=[]
-    for r in review:
-        count+=1
-        if r=='|':
-            br_pos.append(count)
-    #print(br_pos)
-    #print(review[br_pos[0]:br_pos[1]])
-    ran=len(br_pos)
-    try:
-        for i in range(0,ran):
-            revi=review[br_pos[i]:br_pos[i+1]]
-            rev.append(revi)
-    except IndexError:
-        pass
-    data.iat[int(index),10]=rev
+# =============================================================================
+# def review_format(data,index):
+#     review=data.iat[int(index),10]
+#     review=review.replace("A review by",'|')
+#     review=review+'|'
+#     count=0
+#     br_pos=[]
+#     rev=[]
+#     for r in review:
+#         count+=1
+#         if r=='|':
+#             br_pos.append(count)
+#     #print(br_pos)
+#     #print(review[br_pos[0]:br_pos[1]])
+#     ran=len(br_pos)
+#     try:
+#         for i in range(0,ran):
+#             revi=review[br_pos[i]:br_pos[i+1]]
+#             rev.append(revi)
+#     except IndexError:
+#         pass
+#     data.iat[int(index),10]=rev
+# =============================================================================
 
 def data_form(parsed_sent,index, data, file):
     column_titles=["title","released_date","overview","language","cast_members","crew_members","genres","budget","revenue","runtime","reviews"]

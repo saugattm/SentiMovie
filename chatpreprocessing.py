@@ -9,13 +9,13 @@ def func(text):
     parsed_sent = {}
     tokens= word_tokenize(text)
     grammar="""
-            Movie: {<IN><NN>|<NNP>|<NNS>|<NPS>}
+            Movie: {<IN><NN>|<NNP>|<NNS>|<NPS>|<SYM>}
             Search: {<DT>?<NN>|<NNS>} 
             Search: {<VBD>|<VBG>}
             """
     chunkParser = nltk.RegexpParser(grammar)
     tree = chunkParser.parse((pos_tag(tokens)))
-    #print(tree.draw())           
+   # print(tree.draw())           
     for i in tree:
         if type(i)==Tree:
             concat = ''
@@ -29,7 +29,7 @@ def func(text):
                 parsed_sent[n[0]] = n[1]
             else:
                 parsed_sent[n[0]] =  parsed_sent[n[0]] + n[1]
-    print("the parsed_sent is:",parsed_sent)
+    #print("the parsed_sent is:",parsed_sent)
     file_name(parsed_sent)
     search_name(parsed_sent)
 
@@ -49,5 +49,5 @@ def file_name(parsed_sent):
 def search_name(parsed_sent):
     file=parsed_sent['Search']
     return file
-#text="What is the budget of Avengers"
+text="What is the budget of Intern"
 #func(text)  

@@ -7,7 +7,6 @@ import pandas as pd
 from chatpreprocessing import file_name,search_name
 import ast
 from review_classify import reviewclassify
-from dataformatting import data_form,temp_index
    
 
 def tokenize(q):
