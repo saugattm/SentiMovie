@@ -7,7 +7,7 @@ import pandas as pd
 from chatpreprocessing import file_name,search_name
 import ast
 from review_classify import reviewclassify
-   
+
 
 def tokenize(q):
     tokens= word_tokenize(q)
@@ -31,8 +31,8 @@ revenue=['money']
 
 def answers(parsed_sent,index):
     file =file_name(parsed_sent)
-       
-    file_address='/home/baka/SentiMovie/'+file
+
+    file_address='/home/haka/old/SentiMovie/'+file
     data=pd.read_csv(file_address)
     q=search_name(parsed_sent)
     tokens = tokenize(q)
@@ -53,7 +53,7 @@ def answers(parsed_sent,index):
         return data.at[int(index),'overview']
     elif filtered_tokens in revenue:
         return data.at[int(index),'revenue']
-    
+
     elif filtered_tokens in cast:
         return cast_detail
     elif filtered_tokens in direct:

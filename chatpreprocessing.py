@@ -29,7 +29,7 @@ def func(text):
                 parsed_sent[n[0]] = n[1]
             else:
                 parsed_sent[n[0]] =  parsed_sent[n[0]] + n[1]
-    #print("the parsed_sent is:",parsed_sent)
+    print("the parsed_sent is:",parsed_sent)
     file_name(parsed_sent)
     search_name(parsed_sent)
 

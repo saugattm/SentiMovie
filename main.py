@@ -15,7 +15,7 @@ print("\n")
 while (question):
     ques = input("Ask me questions about movies:\n")
     parsed_sent = func(ques)
-
+    print(parsed_sent)
     from crawlsubprocess import crawlsub
 
     if crawlsub(parsed_sent) != 'File Present':
@@ -25,7 +25,7 @@ while (question):
     #df = pd.read_csv("/home/baka/SentiMovie/Reviewcrawler/" + file_name)
     import dataformatting
     file=file_name(parsed_sent)
-    file_address='/home/baka/SentiMovie/Reviewcrawler/'+file
+    file_address='/home/haka/old/SentiMovie/Reviewcrawler/'+file
     data=pd.read_csv(file_address)
     if len(data.index)>2:
         print("Which one do you mean?")
@@ -39,7 +39,7 @@ while (question):
 
     answer = queryprocessing.answers(parsed_sent,index)
     print(answer)
-   
+
     ans = input("Do you want to know about other movies too?(Y/N)")
     if ans.upper() != "Y":
         question = False
